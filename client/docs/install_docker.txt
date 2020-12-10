@@ -1,0 +1,28 @@
+sudo apt-get update
+sudo apt-get install  apt-transport-https ca-certificates curl  gnupg-agent  software-properties-common
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+
+
+docker ps
+
+docker container ls -a
+docker container rm    3deba53376c2 1be05b9c5dfb ec56359a4f39     --force
+
+
+
+
+
+
+docker images -a
+docker image rm      9507b0f3d378   8f4bb8e1977f   83e34bee1770   d10cc9a52cb2   6dea177eebff    --force
+
+
+
+
+curl -X POST http://localhost:5000/api/articles -H 'content-type: application/json' -d '{"name":"test","hit":{   "created_at": "2020-12-08T17:56:38.000Z",   "title": null,   "url": null,   "author": "yetanotherjosh",   "points": null,   "story_text": null,   "comment_text": "streamlined solution 2.",   "num_comments": null,   "story_id": 25326552,   "story_title": "Linus Torvalds good taste argument for linked lists, explained",   "story_url": "https://github.com/mkirchner/linked-list-good-taste",   "parent_id": 25327413,   "created_at_i": 1607450198,   "_tags": ["comment", "author_yetanotherjosh", "story_25326552"],   "objectID": "25348926",   "_highlightResult": {       "author": {           "value": "yetanotherjosh",           "matchLevel": "none",           "matchedWords": []       },       "comment_text": {           "value": " streamlined solution.",           "matchLevel": "full",           "fullyHighlighted": false,           "matchedWords": ["nodejs"]       },       "story_title": {           "value": "Linus Torvalds good taste argument for linked lists, explained",           "matchLevel": "none",           "matchedWords": []       },       "story_url": {           "value": "https://github.com/mkirchner/linked-list-good-taste",           "matchLevel": "none",           "matchedWords": []       }   }}}'
+
+

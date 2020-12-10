@@ -1,0 +1,41 @@
+# docker-compose.yml
+
+version: "3.8"
+services:
+  frontend:
+    container_name: challenge_front_v2
+    build: ./client  
+    image: challenge_front_v2
+    working_dir: /usr/src/challengev2/client
+    ports:
+      - "3000:8080"
+    volumes:
+      - ./client:/usr/src/challengev2/client
+      - /usr/src/challengev2/client/node_modules
+  backend:
+    container_name: challenge_server_v2
+    restart: always
+    build: ./server
+    image: challenge_server_v2
+    working_dir: /usr/src/challengev2/server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/challengev2/server
+      - /usr/src/challengev2/server/node_modules
+      # Permite sincronizar la carpeta de trabajo durante el desarrollo de la aplicacion
+    links:
+      - mongo    
+  mongo:
+    container_name: challenge_mongo_v2
+    image: mongo
+    environment:
+      - MONGODB_DATABASE="challenge"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    
+volumes:
+  mongodata:
+        
