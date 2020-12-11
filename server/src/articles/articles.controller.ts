@@ -21,7 +21,7 @@ export class ArticlesController {
 
     @Post('/many')
     async saveMany(@Body() createArticleDto: CreateArticleDto[], @Res() res: Response, @Req() req: Request) {
-        const result = await this.articlesService.saveMany(createArticleDto, req.query.step);
+        const result = await this.articlesService.saveManyTest(createArticleDto, req.query.step);
         res.status(HttpStatus.CREATED).json(result);
     }
 

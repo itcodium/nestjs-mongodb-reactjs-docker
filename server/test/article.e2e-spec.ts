@@ -14,9 +14,10 @@ describe("E2E Tests for NOTE Endpoints", () => {
     let id = null;
     let articleTotalInit = null;
     let article = null;
-    const FIRST_SET_LENGTH = 2;
-    const SECOND_SET_LENGTH = 2;
-    const THIRD_SET_LENGTH = 3;
+    const FIRST_SET_LENGTH = 5;     // Se insertan 5 registros 
+    const SECOND_SET_LENGTH = 4;    // Se insertan 4 registros: 1 eliminado, y 3 nuevos
+    const THIRD_SET_LENGTH = 3 - 3; // Se insertan 3 registros modificados 
+    const FOURTH_SET_LENGTH = 1 - 1; // Se insertan 1 registros que esta eliminado
 
     it("should delete all articles", () => {
         return req.delete("/api/articles/all")
@@ -112,7 +113,27 @@ describe("E2E Tests for NOTE Endpoints", () => {
                 expect(response.text).toBeTruthy();
                 const res = JSON.parse(response.text);
                 expect(res.length).toBeGreaterThan(0);
-                expect(FIRST_SET_LENGTH - 1 + SECOND_SET_LENGTH - 1 + THIRD_SET_LENGTH - 1).toBe(res.length);
+                expect(FIRST_SET_LENGTH - 1 + SECOND_SET_LENGTH - 1 + THIRD_SET_LENGTH).toBe(res.length);
+            })
+    });
+    it("load fourth data set + 1 exists", () => {
+        return req.post("/api/articles/many?step=4")
+            .set("Accept", "application/json")
+            .expect(HttpStatus.CREATED).then(response => {
+                file.saveToFile(__dirname + '/data/articlesPost4.json', response.text);
+                const res = JSON.parse(response.text);
+            })
+    });
+
+    it("should get all articles Step 4 - Borrados ", () => {
+        return req.get("/api/articles")
+            .expect(HttpStatus.OK)
+            .then(response => {
+                file.saveToFile(__dirname + '/data/articlesGetAll4.json', response.text);
+                expect(response.text).toBeTruthy();
+                const res = JSON.parse(response.text);
+                expect(res.length).toBeGreaterThan(0);
+                expect(FIRST_SET_LENGTH - 1 + SECOND_SET_LENGTH - 1 + THIRD_SET_LENGTH + FOURTH_SET_LENGTH).toBe(res.length);
             })
     });
 

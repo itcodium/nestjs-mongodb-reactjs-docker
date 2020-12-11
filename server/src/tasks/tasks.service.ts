@@ -18,7 +18,7 @@ export class TasksService {
     this.articlesService.deleteAll();
     const res = this.httpService.get('http://hn.algolia.com/api/v1/search_by_date?query=nodejs');
     res.subscribe((response) => {
-      this.articlesService.saveMany(articleHelper.mapArticles(response.data["hits"]), null)
+      this.articlesService.saveMany(articleHelper.mapArticles(response.data["hits"]))
     });
   }
 
