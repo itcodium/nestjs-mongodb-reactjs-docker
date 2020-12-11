@@ -7,20 +7,18 @@ import { ArticleHelper } from '../articles/helpers/articles'
 @Injectable()
 export class TasksService {
   constructor(private articlesService: ArticlesService, private httpService: HttpService) { }
-  private readonly logger = new Logger(TasksService.name);
-  private readonly articleHelper = new ArticleHelper();
-
-
   @Interval(12 * 60 * 60 * 1000)
   handleInterval() {
-    this.logger.debug('Called every 1 hour');
+    const logger = new Logger(TasksService.name);
+    logger.debug('Called every 1 hour');
   }
 
   pullDataFromApi() {
+    const articleHelper = new ArticleHelper();
     this.articlesService.deleteAll();
     const res = this.httpService.get('http://hn.algolia.com/api/v1/search_by_date?query=nodejs');
     res.subscribe((response) => {
-      this.articlesService.saveMany(this.articleHelper.mapArticles(response.data["hits"]))
+      this.articlesService.saveMany(articleHelper.mapArticles(response.data["hits"]), null)
     });
   }
 

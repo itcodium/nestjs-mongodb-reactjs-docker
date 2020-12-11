@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
-export type ArticleDocument = Article & Document;
+export type ArticlePullDocument = ArticlePull & Document;
 
 @Schema()
-export class Article {
+export class ArticlePull {
   @Prop({ type: mongoose.Schema.Types.Mixed })
   hit: {};
   @Prop()
@@ -15,4 +15,4 @@ export class Article {
 
 }
 
-export const ArticleSchema = SchemaFactory.createForClass(Article);
+export const ArticlePullSchema = SchemaFactory.createForClass(ArticlePull);
